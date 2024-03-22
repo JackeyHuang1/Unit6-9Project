@@ -1,12 +1,14 @@
 import java.util.Scanner;
 public class Chess {
     private Piece[][] board;
-    Scanner scan;
-    String color;
+    private Scanner scan;
+    private String color;
+    private boolean run;
     public Chess() {
         scan = new Scanner(System.in);
         createBoard();
         color = "White";
+        run = true;
         play();
     }
     private void createBoard() {
@@ -88,16 +90,38 @@ public class Chess {
         System.out.print("Which piece would you like to move? (Give notation it is on such as e2) ");
         String piece = scan.nextLine();
         char char1 = piece.charAt(0);
-        int num = char1;
-        if (!board[num][String.valueOf(piece.substring(1))].getColor().equals(color)) {
+        int num = char1 - 'a';
+        System.out.println(num);
+        if (board[8-Integer.parseInt(piece.substring(1))][num].getColor().equals(color)) {
+            System.out.print("To which square? (Give notation such as e4) ");
+            String direction = scan.nextLine();
+            char1 = direction.charAt(0);
+            int destination = char1 - 'a';
+            if (board[8-Integer.parseInt(direction.substring(1))][destination].getColor().equals(color)) {
+                System.out.println("You can't capture your own piece");
+                move();
+            }
+            int[] pos = new int[2];
+            pos[0] = 8-Integer.parseInt(piece.substring(1));
+            pos[1] = num;
+            board[8-Integer.parseInt(direction.substring(1))][destination] = board[8-Integer.parseInt(piece.substring(1))][num];
+            board[8-Integer.parseInt(piece.substring(1))][num] = new Piece(pos, "none", "_   ");
 
+            if (color.equals("White")) {
+                color = "Black";
+            } else {
+                color = "White";
+            }
+        } else {
+            System.out.println("Invalid move");
+            move();
         }
-        System.out.print("To which square? (Give notation such as e4) ");
-        String direction = scan.nextLine();
     }
 
     public void play() {
-        printBoard();
-        System.out.println('e' - 'a' + 1);
+        while (run) {
+            printBoard();
+            move();
+        }
     }
 }
