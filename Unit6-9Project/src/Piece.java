@@ -2,6 +2,7 @@ public class Piece {
     private int[] position;
     private String color;
     private String name;
+
     public Piece(int[] position, String color, String name) {
         this.position = position;
         this.color = color;
@@ -27,4 +28,5 @@ public class Piece {
             return false;
         } return true;
     }
+
 }

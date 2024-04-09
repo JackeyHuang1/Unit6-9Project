@@ -1,137 +1,87 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 public class Chess {
-    private Piece[][] board;
+    private Board board;
     private Scanner scan;
     private String color;
     private boolean run;
     private ArrayList pointsWhite;
     private ArrayList pointsBlack;
+
     public Chess() {
         scan = new Scanner(System.in);
-        createBoard();
+        board = new Board();
         color = "White";
         run = true;
+        System.out.println("You win the game by capturing the king (Not an excuse because I'm bad at coding and can't implement checks)");
         play();
-    }
-    private void createBoard() {
-        board = new Piece[8][8];
-        for (int i = 0; i < board.length; i++) {
-            int[] pos = new int[2];
-            pos[0] = 1;
-            pos[1] = i;
-            board[1][i] = new Pawn(pos, "Black", "♙ ");
-        }
-        for (int i = 0; i < board.length; i++) {
-            int[] pos = new int[2];
-            pos[0] = 6;
-            pos[1] = i;
-            board[6][i] = new Pawn(pos, "White", "♟ ");
-        }
-        for (int i = 2; i < board.length-2; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                int[] pos = new int[2];
-                pos[0] = i;
-                pos[1] = j;
-                board[i][j] = new Piece(pos, "none", "_   ");
-            }
-        }
-        int[] pos = new int[2];
-        pos[0] = 0;
-        pos[1] = 0;
-        board[0][0] = new Rook(pos, "Black", "♜ ");
-        pos[1] += 1;
-        board[0][1] = new Knight(pos, "Black", "♞ ");
-        pos[1] += 1;
-        board[0][2] = new Bishop(pos, "Black", "♝ ");
-        pos[1] += 1;
-        board[0][3] = new Queen(pos, "Black", "♛ ");
-        pos[1] += 1;
-        board[0][4] = new King(pos, "Black", "♚ ");
-        pos[1] += 1;
-        board[0][5] = new Bishop(pos, "Black", "♝ ");
-        pos[1] += 1;
-        board[0][6] = new Knight(pos, "Black", "♞ ");
-        pos[1] += 1;
-        board[0][7] = new Rook(pos, "Black", "♜ ");
-
-        pos[0] = 7;
-        pos[1] = 0;
-
-        board[7][0] = new Rook(pos, "White", "♜ ");
-        pos[1] += 1;
-        board[7][1] = new Knight(pos, "White", "♞ ");
-        pos[1] += 1;
-        board[7][2] = new Bishop(pos, "White", "♝ ");
-        pos[1] += 1;
-        board[7][3] = new Queen(pos, "White", "♛ ");
-        pos[1] += 1;
-        board[7][4] = new King(pos, "White", "♚ ");
-        pos[1] += 1;
-        board[7][5] = new Bishop(pos, "White", "♝ ");
-        pos[1] += 1;
-        board[7][6] = new Knight(pos, "White", "♞ ");
-        pos[1] += 1;
-        board[7][7] = new Rook(pos, "White", "♜ ");
-    }
-
-    private boolean hasPiece(int[] spot) {
-        if (board[spot[0]][spot[1]].getPiece() != "_") {
-            return true;
-        } return false;
     }
 
     private void printBoard() {
-        for (Piece[] row: board) {
-            for (Piece piece: row) {
-                System.out.print(piece.getPiece());
-            } System.out.println();
+        ;
+        for (char alphabet = 'a'; alphabet <= 'h'; alphabet++) {
+            System.out.print("  " + alphabet);
         }
+        System.out.println();
+        for (int i = 0; i < board.getBoard().length; i++) {
+            System.out.print(Colors.WHITE + (8 - i) + " ");
+            for (int j = 0; j < board.getBoard()[0].length; j++) {
+                System.out.print(board.getBoard()[i][j].getPiece());
+            }
+            System.out.println();
+        }
+
     }
 
-    private void move() {
+    public void move() {
+        printBoard();
+        System.out.println(Colors.RESET + "Right now, it is " + color + "'s turn");
         System.out.print("Which piece would you like to move? (Give notation it is on such as e2) ");
         String piece = scan.nextLine();
         char char1 = piece.charAt(0);
         int num = char1 - 'a';
-        if (board[8-Integer.parseInt(piece.substring(1))][num].getColor().equals(color)) {
-            System.out.print("To which square? (Give notation such as e4) ");
-            String direction = scan.nextLine();
-            char1 = direction.charAt(0);
-            int destination = char1 - 'a';
-            if (board[8-Integer.parseInt(direction.substring(1))][destination].getColor().equals(color)) {
-                System.out.println("You can't capture your own piece");
-                move();
-            }
-            int[] target = new int[2] ;
-            target[0] = 8-Integer.parseInt(direction.substring(1));
-            target[1] = destination;
-            if (board[8-Integer.parseInt(piece.substring(1))][num].isValidMove(target)) {
-                int[] pos = new int[2];
-                pos[0] = 8-Integer.parseInt(piece.substring(1));
-                pos[1] = num;
-                board[8-Integer.parseInt(direction.substring(1))][destination] = board[8-Integer.parseInt(piece.substring(1))][num];
-                board[8-Integer.parseInt(piece.substring(1))][num] = new Piece(pos, "none", "_   ");
-                if (color.equals("White")) {
-                    color = "Black";
-                } else {
-                    color = "White";
-                }
-            } else {
-                System.out.println("Invalid move");
-                move();
-            }
-
-        } else {
-            System.out.println("Invalid move");
+        if (num > 7 || Character.getNumericValue(piece.charAt(1)) > 7) {
+            System.out.println("invalid input, retry");
             move();
+        }
+        int[] start = new int[]{8 - Character.getNumericValue(piece.charAt(1)), num};
+        if (!board.isValidPiece(color, start)) {
+            System.out.println("Invalid move, that is not one of your pieces");
+            move();
+        }
+        System.out.print("To which square? (Give notation to where such as e4) ");
+        String destination = scan.nextLine();
+        char char2 = destination.charAt(0);
+        int num2 = char2 - 'a';
+        if (num2 > 7 || Character.getNumericValue(destination.charAt(1)) > 7) {
+            System.out.println("invalid input, retry");
+            move();
+        }
+        int[] end = new int[]{8 - Character.getNumericValue(destination.charAt(1)), num2};
+        if (board.getBoard()[start[0]][start[1]].isValidMove(end)) {
+            board.move(start, end);
+        } else {
+            System.out.println("Invalid move, that is not a valid square");
+            move();
+        }
+        if (color.equals("White")) {
+            color = "Black";
+        } else {
+            color = "White";
         }
     }
 
     public void play() {
         while (run) {
-            printBoard();
             move();
+//        } if () {
+//            System.out.print(color + " has checkmated ");
+//            if (color.equals("White")) {
+//                color = "Black";
+//            } else {
+//                color = "White";
+//            } System.out.print(color);
+//        }
         }
     }
 }
