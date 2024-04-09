@@ -25,11 +25,11 @@ public class Pawn extends Piece {
                 return true;
             }
         }
-        if (getColor().equals("White") && !Board.getBoard()[destination[0]][destination[1]].getColor().equals("none") && destination[0] == getPosition()[0] - 1 && destination[1] == getPosition()[1] - 1) {
+        if (getColor().equals("White") && !Board.getBoard()[destination[0]][destination[1]].getColor().equals("none") && destination[0] == getPosition()[0] - 1 && (destination[1] == getPosition()[1] - 1 || destination[1]== getPosition()[1] + 1)) {
             hasMoved = true;
             return true;
         }
-        if (getColor().equals("Black") && !Board.getBoard()[destination[0]][destination[1]].getColor().equals("none") && destination[0] == getPosition()[0] + 1 && destination[1] == getPosition()[1] + 1) {
+        if (getColor().equals("Black") && !Board.getBoard()[destination[0]][destination[1]].getColor().equals("none") && destination[0] == getPosition()[0] + 1 && (destination[1] == getPosition()[1] - 1|| destination[1] == getPosition()[1] + 1)) {
             hasMoved = true;
             return true;
         } return false;
