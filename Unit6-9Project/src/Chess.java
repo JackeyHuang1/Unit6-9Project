@@ -63,15 +63,16 @@ public class Chess {
         int[] end = new int[]{8 - Character.getNumericValue(destination.charAt(1)), num2};
         if (Board.getBoard()[start[0]][start[1]].isValidMove(end)) {
             Board.move(start, end);
+            if (color.equals("White")) {
+                color = "Black";
+            } else {
+                color = "White";
+            }
         } else {
             System.out.println("Invalid move, that is not a valid square");
             move();
         }
-        if (color.equals("White")) {
-            color = "Black";
-        } else {
-            color = "White";
-        }
+
     }
 
     public void checkMate(String color) {
