@@ -3,63 +3,35 @@ public class Board {
     public void makeBoard() {
         board = new Piece[8][8];
         for (int i = 0; i < board.length; i++) {
-
-            int[] pos = new int[2];
-            pos[0] = 1;
-            pos[1] = i;
-            board[1][i] = new Pawn(pos, "Black", Colors.BLACK + "♙ ");
+            board[1][i] = new Pawn(new int[] {1, i}, "Black", Colors.BLACK + "♙ ");
         }
         for (int i = 0; i < board.length; i++) {
-            int[] pos = new int[2];
-            pos[0] = 6;
-            pos[1] = i;
-            board[6][i] = new Pawn(pos, "White", Colors.WHITE + "♟ ");
+            board[6][i] = new Pawn(new int[] {6, i}, "White", Colors.WHITE + "♟ ");
         }
         for (int i = 2; i < board.length-2; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                int[] pos = new int[2];
-                pos[0] = i;
-                pos[1] = j;
-                board[i][j] = new Piece(pos, "none", Colors.WHITE + "_   ");
+                board[i][j] = new Piece(new int[] {i, j}, "none", Colors.WHITE + "_   ");
             }
         }
-        int[] pos = new int[2];
-        pos[0] = 0;
-        pos[1] = 0;
-        board[0][0] = new Rook(pos, "Black", Colors.BLACK + "♜ ");
-        pos[1] += 1;
-        board[0][1] = new Knight(pos, "Black", Colors.BLACK + "♞ ");
-        pos[1] += 1;
-        board[0][2] = new Bishop(pos, "Black", Colors.BLACK + "♝ ");
-        pos[1] += 1;
-        board[0][3] = new Queen(pos, "Black", Colors.BLACK + "♛ ");
-        pos[1] += 1;
-        board[0][4] = new King(pos, "Black", Colors.BLACK + "♚ ");
-        pos[1] += 1;
-        board[0][5] = new Bishop(pos, "Black", Colors.BLACK + "♝ ");
-        pos[1] += 1;
-        board[0][6] = new Knight(pos, "Black", Colors.BLACK + "♞ ");
-        pos[1] += 1;
-        board[0][7] = new Rook(pos, "Black", Colors.BLACK + "♜ ");
 
-        pos[0] = 7;
-        pos[1] = 0;
+        board[0][0] = new Rook(new int[] {0, 0}, "Black", Colors.BLACK + "♜ ");
+        board[0][1] = new Knight(new int[] {0, 1}, "Black", Colors.BLACK + "♞ ");
+        board[0][2] = new Bishop(new int[] {0, 2}, "Black", Colors.BLACK + "♝ ");
+        board[0][3] = new Queen(new int[] {0, 3}, "Black", Colors.BLACK + "♛ ");
+        board[0][4] = new King(new int[] {0, 4}, "Black", Colors.BLACK + "♚ ");
+        board[0][5] = new Bishop(new int[] {0, 5}, "Black", Colors.BLACK + "♝ ");
+        board[0][6] = new Knight(new int[] {0, 6}, "Black", Colors.BLACK + "♞ ");
+        board[0][7] = new Rook(new int[] {0, 7}, "Black", Colors.BLACK + "♜ ");
 
-        board[7][0] = new Rook(pos, "White", Colors.WHITE + "♜ ");
-        pos[1] += 1;
-        board[7][1] = new Knight(pos, "White", Colors.WHITE +"♞ ");
-        pos[1] += 1;
-        board[7][2] = new Bishop(pos, "White", Colors.WHITE +"♝ ");
-        pos[1] += 1;
-        board[7][3] = new Queen(pos, "White", Colors.WHITE +"♛ ");
-        pos[1] += 1;
-        board[7][4] = new King(pos, "White", Colors.WHITE +"♚ ");
-        pos[1] += 1;
-        board[7][5] = new Bishop(pos, "White", Colors.WHITE +"♝ ");
-        pos[1] += 1;
-        board[7][6] = new Knight(pos, "White", Colors.WHITE +"♞ ");
-        pos[1] += 1;
-        board[7][7] = new Rook(pos, "White", Colors.WHITE +"♜ ");
+
+        board[7][0] = new Rook(new int[] {7, 0}, "White", Colors.WHITE + "♜ ");
+        board[7][1] = new Knight(new int[] {7, 1}, "White", Colors.WHITE +"♞ ");
+        board[7][2] = new Bishop(new int[] {7, 2}, "White", Colors.WHITE +"♝ ");
+        board[7][3] = new Queen(new int[] {7, 3}, "White", Colors.WHITE +"♛ ");
+        board[7][4] = new King(new int[] {7, 4}, "White", Colors.WHITE +"♚ ");
+        board[7][5] = new Bishop(new int[] {7, 5}, "White", Colors.WHITE +"♝ ");
+        board[7][6] = new Knight(new int[] {7, 6}, "White", Colors.WHITE +"♞ ");
+        board[7][7] = new Rook(new int[] {7, 7}, "White", Colors.WHITE +"♜ ");
     }
 
     public static Piece[][] getBoard() {

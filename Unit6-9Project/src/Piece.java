@@ -26,6 +26,7 @@ public class Piece {
     }
 
     public boolean isValidMove(int[] move) {
+        System.out.println(position[0] + " " + position[1]);
         System.out.println(move[0] + " " + move[1]);
         if (move[0] > 7 || move[0] < 0) {
             return false;

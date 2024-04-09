@@ -1,6 +1,7 @@
-public class Pawn extends Piece{
+public class Pawn extends Piece {
     int amount = 2;
     boolean hasMoved = false;
+
     public Pawn(int[] position, String color, String name) {
         super(position, color, name);
     }
@@ -12,16 +13,21 @@ public class Pawn extends Piece{
         if (!super.isValidMove(destination)) {
             return false;
         }
-        if (getColor().equals("White") && destination[0] == getPosition()[0] -amount) {
-            hasMoved = true;
-            return true;
-        } if (getColor().equals("Black") && destination[0] == getPosition()[0] + amount) {
+        if (getColor().equals("White") && destination[0] == getPosition()[0] - amount) {
             hasMoved = true;
             return true;
         }
-        if (getColor().equals("White") && !Board.getBoard()[destination[0]][destination[1]].getPiece().equals("none")) {
-
+        if (getColor().equals("Black") && destination[0] == getPosition()[0] + amount) {
+            hasMoved = true;
+            return true;
         }
-        return false;
+        if (getColor().equals("White") && !Board.getBoard()[destination[0]][destination[1]].getPiece().equals("none") && destination[0] == getPosition()[0] - 1 && destination[1] == getPosition()[1] - 1) {
+            hasMoved = true;
+            return true;
+        }
+        if (getColor().equals("White") && !Board.getBoard()[destination[0]][destination[1]].getPiece().equals("none") && destination[0] == getPosition()[0] - 1 && destination[1] == getPosition()[1] - 1) {
+            hasMoved = true;
+            return true;
+        } return false;
     }
 }
