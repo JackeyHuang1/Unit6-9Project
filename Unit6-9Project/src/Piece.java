@@ -21,7 +21,12 @@ public class Piece {
         return color;
     }
 
+    public void updatePosition(int[] newPosition) {
+        position = newPosition;
+    }
+
     public boolean isValidMove(int[] move) {
+        System.out.println(move[0] + " " + move[1]);
         if (move[0] > 7 || move[0] < 0) {
             return false;
         } if (move[1] > 7 || move[1] < 0) {

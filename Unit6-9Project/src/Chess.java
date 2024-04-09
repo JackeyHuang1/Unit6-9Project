@@ -11,6 +11,7 @@ public class Chess {
     public Chess() {
         scan = new Scanner(System.in);
         board = new Board();
+        board.makeBoard();
         color = "White";
         run = true;
         System.out.println("You win the game by capturing the king (Not an excuse because I'm bad at coding and can't implement checks)");
@@ -34,6 +35,7 @@ public class Chess {
     }
 
     public void move() {
+        checkMate(color);
         printBoard();
         System.out.println(Colors.RESET + "Right now, it is " + color + "'s turn");
         System.out.print("Which piece would you like to move? (Give notation it is on such as e2) ");
@@ -45,7 +47,7 @@ public class Chess {
             move();
         }
         int[] start = new int[]{8 - Character.getNumericValue(piece.charAt(1)), num};
-        if (!board.isValidPiece(color, start)) {
+        if (!Board.isValidPiece(color, start)) {
             System.out.println("Invalid move, that is not one of your pieces");
             move();
         }
@@ -58,8 +60,8 @@ public class Chess {
             move();
         }
         int[] end = new int[]{8 - Character.getNumericValue(destination.charAt(1)), num2};
-        if (board.getBoard()[start[0]][start[1]].isValidMove(end)) {
-            board.move(start, end);
+        if (Board.getBoard()[start[0]][start[1]].isValidMove(end)) {
+            Board.move(start, end);
         } else {
             System.out.println("Invalid move, that is not a valid square");
             move();
@@ -71,17 +73,22 @@ public class Chess {
         }
     }
 
+    public void checkMate(String color) {
+        boolean hasKing = false;
+        for (int i = 0; i < Board.getBoard().length; i++) {
+            for (int j = 0; j < Board.getBoard()[0].length; j++) {
+                if (Board.getBoard()[i][j].getPiece().contains("♚") && Board.getBoard()[i][j].getColor().equals(color)) {
+                    hasKing = true;
+                }
+            }
+        } if (!hasKing) {
+            run = false;
+        }
+    }
     public void play() {
         while (run) {
             move();
-//        } if () {
-//            System.out.print(color + " has checkmated ");
-//            if (color.equals("White")) {
-//                color = "Black";
-//            } else {
-//                color = "White";
-//            } System.out.print(color);
-//        }
         }
+        System.out.print(color + " has been checkmated ");
     }
 }

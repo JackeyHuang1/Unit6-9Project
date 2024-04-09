@@ -1,6 +1,6 @@
 public class Board {
-    Piece[][] board;
-    public Board() {
+    static Piece[][] board;
+    public void makeBoard() {
         board = new Piece[8][8];
         for (int i = 0; i < board.length; i++) {
 
@@ -62,21 +62,24 @@ public class Board {
         board[7][7] = new Rook(pos, "White", Colors.WHITE +"♜ ");
     }
 
-    public Piece[][] getBoard() {
+    public static Piece[][] getBoard() {
         return board;
     }
 
 
-    public boolean isValidPiece(String color, int[] start) {
+    public static boolean isValidPiece(String color, int[] start) {
         if (board[start[0]][start[1]].getColor().equals(color)) {
             return true;
         } return false;
     }
 
-    public void move(int[] start, int[] end) {
+    public static void move(int[] start, int[] end) {
         Piece temp = board[start[0]][start[1]];
-        board[end[0]][end[1]] = board[start[0]][start[1]];
-        board[start[0]][start[1]] = temp;
+        int[] tempCoords = board[end[0]][end[1]].getPosition();
+        board[end[0]][end[1]] = temp;
+        board[end[0]][end[1]].updatePosition(tempCoords);
+        board[start[0]][start[1]] = new Piece(new int[] {start[0], start[1]}, "none", Colors.WHITE + "_   ");
+
     }
 }
 

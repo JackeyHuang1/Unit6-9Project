@@ -4,7 +4,6 @@ public class Knight extends Piece {
     }
 
     public boolean isValidMove(int[] destination) {
-        System.out.println(getPosition()[0] + " " + getPosition()[1]);
         if (!super.isValidMove(destination)) {
             return false;
         }
